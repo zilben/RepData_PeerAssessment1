@@ -22,6 +22,15 @@ hist(activitySteps, breaks = 20)
 
 Mean and median total number of steps taken per day
 
+```r
+summary(activitySteps)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##      41    8841   10760   10770   13290   21190       8
+```
+
 Remove NAs
 
 ```r
@@ -86,7 +95,7 @@ activityMeanSteps <- sqldf("
 plot(activityMeanSteps$interval,activityMeanSteps$AvgSteps, type = "l")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 Which 5-minute interval, on average across all the days in the dataset, contains 
 the maximum number of steps?
@@ -146,7 +155,7 @@ activitySteps <- tapply(activity3$steps, activity3$date, sum)
 hist(activitySteps, breaks = 20)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 Do these values differ from the estimates from the first part of the assignment? 
 
@@ -184,4 +193,4 @@ library(lattice)
 xyplot(AvgSteps ~ interval | weeks, data = activityMeanSteps, type = "l", layout = c(1, 2))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->

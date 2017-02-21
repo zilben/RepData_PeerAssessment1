@@ -22,9 +22,12 @@ hist(activitySteps, breaks = 20)
 ```
 
 Mean and median total number of steps taken per day
+```{r, ECHO = TRUE}
+summary(activitySteps)
+```
 
 Remove NAs
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 activity2 <- activity[!is.na(activity$steps),]
 
 library(sqldf)
@@ -40,7 +43,7 @@ activityByDay <- sqldf("
 
 Time series plot (i.e.  type = "l" ) of the 5-minute interval (x-axis) and the average
 number of steps taken, averaged across all days (y-axis)
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 activityMeanSteps <- sqldf("
         SELECT avg(steps) AS AvgSteps, interval
         FROM activity2
@@ -51,7 +54,7 @@ plot(activityMeanSteps$interval,activityMeanSteps$AvgSteps, type = "l")
 
 Which 5-minute interval, on average across all the days in the dataset, contains 
 the maximum number of steps?
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 sqldf("
         SELECT max(AvgSteps) AS AvgSteps, interval
         FROM activityMeanSteps
@@ -62,13 +65,13 @@ sqldf("
 
 Total number of missing values in the dataset (i.e. the total number of rows 
 with  NA s)
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 sum(is.na(activity$steps))
 ```
 
 Create a new dataset that is equal to the original dataset but with 
 the missing data filled in
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 mean(activity$steps, na.rm = T)
 
 activity3 <- activity
@@ -78,7 +81,7 @@ colSums(is.na(activity3))
 
 histogram of the total number of steps taken each day and Calculate and 
 report the mean and median total number of steps taken per day.
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 activitySteps <- tapply(activity3$steps, activity3$date, sum)
 hist(activitySteps, breaks = 20)
 ```
@@ -97,7 +100,7 @@ Answer: Frequencies are lowered accross days.
 Create a new factor variable in the dataset with two levels -- "weekday" 
 and "weekend" indicating whether a given date is a weekday or day.
 weekend 
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 activity3$weekdays <- weekdays(activity3$date)
 activity3$weeks[(activity3$weekdays == "Saturday" | activity3$weekdays == "Sunday")] <- "weekend"
 activity3$weeks[!(activity3$weekdays == "Saturday" | activity3$weekdays == "Sunday")] <- "weekdays"
@@ -106,7 +109,7 @@ activity3$weeks[!(activity3$weekdays == "Saturday" | activity3$weekdays == "Sund
 Panel plot containing a time series plot (i.e.  type = "l" ) of the 5-minute 
 interval (x-axis) and the average number of steps taken, averaged across 
 all weekday days or weekend days (y-axis). 
-```{r ECHO = TRUE}
+```{r, ECHO = TRUE}
 activityMeanSteps <- sqldf("
         SELECT avg(steps) AS AvgSteps, interval, weeks
         FROM activity3
